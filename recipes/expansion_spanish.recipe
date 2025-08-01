@@ -2,6 +2,7 @@
 __license__ = 'GPL v3'
 __author__ = 'Kovid Goyal'
 __title__ = 'Expansion'
+__url__ = 'https://www.expansion.com/'
 
 from calibre.web.feeds.news import BasicNewsRecipe
 
