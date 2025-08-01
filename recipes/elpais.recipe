@@ -1,0 +1,19 @@
+__license__ = 'GPL v3'
+__author__ = 'Community'
+__title__ = 'El País'
+__url__ = 'https://elpais.com/'
+
+from calibre.web.feeds.news import BasicNewsRecipe
+
+class ElPais(BasicNewsRecipe):
+    title = 'El País'
+    oldest_article = 7
+    max_articles_per_feed = 100
+    language = 'es'
+
+    feeds = [
+        (u'Portada', u'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada'),
+        (u'Internacional', u'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/internacional/portada'),
+        (u'Economía', u'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/economia/portada'),
+        (u'Tecnología', u'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/tecnologia/portada'),
+    ]
