@@ -1,0 +1,1 @@
+# Solo por compatibilidad con Railway. Calibre se instala aparte vía Docker.
