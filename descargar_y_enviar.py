@@ -7,7 +7,9 @@ import smtplib
 recipes = {
     'El_Mundo': 'recipes/elmundo.recipe',
     'Expansion': 'recipes/expansion_spanish.recipe',
-    'Wall_Street_Journal': 'recipes/wsj_news.recipe'
+    'Wall_Street_Journal': 'recipes/wsj_news.recipe',
+    'El_Pais': 'recipes/elpais.recipe',
+    'Financial_Times': 'recipes/financial_times.recipe'
 }
 
 FROM_EMAIL = os.getenv('FROM_EMAIL')
