@@ -1,0 +1,33 @@
+from calibre.web.feeds.news import BasicNewsRecipe
+import requests
+
+class ElMundoOrbyt(BasicNewsRecipe):
+    title = 'El Mundo (Orbyt)'
+    max_articles_per_feed = 10
+    oldest_article = 1
+    # URL base para el pdf, con acceso con sesión orbyt
+    base_url = 'https://orbyt.es/'
+
+    # Aquí defines tu usuario y contraseña orbyt
+    username = 'TU_USUARIO_ORBYT'
+    password = 'TU_CONTRASEÑA_ORBYT'
+
+    def get_pdf_url(self):
+        # Lógica para autenticarse y obtener URL del PDF
+        session = requests.Session()
+        login_url = 'https://orbyt.es/login'
+        payload = {
+            'username': self.username,
+            'password': self.password,
+        }
+        session.post(login_url, data=payload)
+        # Suponiendo que la URL del pdf se obtiene desde una página concreta
+        pdf_page = session.get('https://orbyt.es/pdf/portada')
+        # Extraer URL real pdf (esto es ejemplo, tendrás que adaptarlo según html)
+        pdf_url = 'https://orbyt.es/path/to/pdf/el_mundo_today.pdf'
+        return pdf_url
+
+    def fetch(self):
+        pdf_url = self.get_pdf_url()
+        response = requests.get(pdf_url)
+        return response.content
