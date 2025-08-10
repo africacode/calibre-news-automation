@@ -1,0 +1,27 @@
+from calibre.web.feeds.news import BasicNewsRecipe
+import requests
+
+class ExpansionOrbyt(BasicNewsRecipe):
+    title = 'Expansión (Orbyt)'
+    max_articles_per_feed = 10
+    oldest_article = 1
+
+    username = 'TU_USUARIO_ORBYT'
+    password = 'TU_CONTRASEÑA_ORBYT'
+
+    def get_pdf_url(self):
+        session = requests.Session()
+        login_url = 'https://orbyt.es/login'
+        payload = {
+            'username': self.username,
+            'password': self.password,
+        }
+        session.post(login_url, data=payload)
+        pdf_page = session.get('https://orbyt.es/pdf/expansion')
+        pdf_url = 'https://orbyt.es/path/to/pdf/expansion_today.pdf'
+        return pdf_url
+
+    def fetch(self):
+        pdf_url = self.get_pdf_url()
+        response = requests.get(pdf_url)
+        return response.content
