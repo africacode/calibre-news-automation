@@ -5,8 +5,9 @@ from email.message import EmailMessage
 import smtplib
 
 recipes = {
-    'El_Mundo': 'recipes/elmundo_orbyt.recipe',
-    'Expansion': 'recipes/expansion_orbyt.recipe',
+    'El_Mundo': 'recipes/elmundo.recipe',
+    'FT': 'recipes/financial_times.recipe',
+    'WSJ': 'recipes/wsj_new.recipe'
 }
 
 FROM_EMAIL = os.getenv('FROM_EMAIL')
