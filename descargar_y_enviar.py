@@ -6,8 +6,6 @@ import smtplib
 
 recipes = {
     'El_Mundo': 'recipes/elmundo.recipe',
-    'FT': 'recipes/financial_times.recipe',
-    'WSJ': 'recipes/wsj_new.recipe'
 }
 
 FROM_EMAIL = os.getenv('FROM_EMAIL')
@@ -16,14 +14,10 @@ APP_PASSWORD = os.getenv('APP_PASSWORD')
 
 attachments = []
 for name, path in recipes.items():
-    # PDF oficial desde Orbyt
-    pdf_file = f"{name}.pdf"
-    subprocess.run(['ebook-convert', path, pdf_file], check=True)
-    attachments.append(pdf_file)
 
     # EPUB opcional desde el mismo PDF
     epub_file = f"{name}.epub"
-    subprocess.run(['ebook-convert', pdf_file, epub_file], check=True)
+    subprocess.run(['ebook-convert', path, epub_file], check=True)
     attachments.append(epub_file)
 
     time.sleep(5)
