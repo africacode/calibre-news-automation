@@ -1,5 +1,9 @@
 FROM python:3.11-slim
 
+# 👇 Esto te permite forzar un rebuild cuando quieras
+ARG CACHE_BUST=1
+ENV CACHE_BUST=${CACHE_BUST}
+
 # Variables para evitar prompts interactivos
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=1 \
