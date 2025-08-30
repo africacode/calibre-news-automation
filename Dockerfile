@@ -32,5 +32,5 @@ COPY . .
 # Crear carpeta de salida
 RUN mkdir -p /app/output
 
-CMD ["python", "run_calibre.py"]
+CMD ["python", "descargar_y_enviar.py"]
 
