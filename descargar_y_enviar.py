@@ -16,7 +16,7 @@ attachments = []
 for name, path in recipes.items():
 
     # EPUB opcional desde el mismo PDF
-    epub_file = f"{name}.epub"
+    epub_file = f"{name}_{date.today().isoformat()}.epub"
     subprocess.run(['ebook-convert', path, epub_file], check=True)
     attachments.append(epub_file)
 
