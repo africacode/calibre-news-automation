@@ -22,18 +22,17 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Copiar requirements y dependencias extra para recipes
+# Copiar primero requirements.txt
 COPY requirements.txt ./
-RUN echo "requests\nbeautifulsoup4\nlxml" >> requirements.txt \
-    && pip install --upgrade pip \
-    && pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copiar el código y las recetas
+# Copiar todo el código, incluyendo recetas
 COPY . .
-COPY recipes ./recipes
 
 # Crear carpeta de salida
 RUN mkdir -p /app/output
 
-CMD ["python", "descargar_y_enviar.py"]
+# Debug: mostrar qué archivos quedaron dentro del contenedor
+RUN echo "📂 Contenido final de /app:" && ls -R /app
 
+CMD ["python", "descargar_y_enviar.py"]
