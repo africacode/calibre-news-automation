@@ -1,9 +1,5 @@
 FROM python:3.11-slim
 
-# 👇 Esto te permite forzar un rebuild cuando quieras
-ARG CACHE_BUST=1
-ENV CACHE_BUST=${CACHE_BUST}
-
 # Variables para evitar prompts interactivos
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=1 \
@@ -26,12 +22,15 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Copiar solo requirements primero para aprovechar caché
+# Copiar requirements y dependencias extra para recipes
 COPY requirements.txt ./
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN echo "requests\nbeautifulsoup4\nlxml" >> requirements.txt \
+    && pip install --upgrade pip \
+    && pip install -r requirements.txt
 
-# Copiar el resto del código
+# Copiar el código y las recetas
 COPY . .
+COPY recipes ./recipes
 
 # Crear carpeta de salida
 RUN mkdir -p /app/output
