@@ -1,37 +1,23 @@
 import os
-import time
 import subprocess
-from email.message import EmailMessage
-import smtplib
+from datetime import datetime
 
+# Diccionario de recetas disponibles
 recipes = {
-    'El_Mundo': 'recipes/elmundo.recipe',
+    "elmundo": "recipes/elmundo.recipe"
 }
 
-FROM_EMAIL = os.getenv('FROM_EMAIL')
-TO_EMAIL = os.getenv('TO_EMAIL')
-APP_PASSWORD = os.getenv('APP_PASSWORD')
+# Carpeta de salida
+output_dir = "/app/output"
 
-attachments = []
-for name, path in recipes.items():
+def descargar_noticias():
+    for nombre, ruta in recipes.items():
+        salida = os.path.join(output_dir, f"{nombre}_{datetime.now().strftime('%Y-%m-%d')}.epub")
+        print(f"📥 Descargando {nombre} con receta {ruta}...")
+        subprocess.run([
+            "ebook-convert", ruta, salida
+        ], check=True)
+        print(f"✅ Guardado en {salida}")
 
-    # EPUB opcional desde el mismo PDF
-    epub_file = f"{name}_{date.today().isoformat()}.epub"
-    subprocess.run(['ebook-convert', path, epub_file], check=True)
-    attachments.append(epub_file)
-
-    time.sleep(5)
-
-msg = EmailMessage()
-msg['From'] = FROM_EMAIL
-msg['To'] = TO_EMAIL
-msg['Subject'] = "Tus periódicos del día"
-
-for file in attachments:
-    with open(file, 'rb') as f:
-        maintype, subtype = ('application', 'pdf') if file.endswith('.pdf') else ('application', 'epub+zip')
-        msg.add_attachment(f.read(), maintype=maintype, subtype=subtype, filename=file)
-
-with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-    smtp.login(FROM_EMAIL, APP_PASSWORD)
-    smtp.send_message(msg)
+if __name__ == "__main__":
+    descargar_noticias()
